@@ -1,8 +1,10 @@
 <?php
     require 'vendor/autoload.php';
-    require 'config.php'; 
+    require 'config.php';
 
     use Firebase\JWT\JWT;
+    use Firebase\JWT\ExpiredException;
+    use Firebase\JWT\SignatureInvalidException;
     use Firebase\JWT\Key;
 
     function generate_jwt($user_id) {
@@ -24,8 +26,12 @@
         try {
             $decoded = JWT::decode($token, new Key($jwtSecret, 'HS256'));
             return (array)$decoded;
+        } catch (ExpiredException $e) {
+            return ['error' => 'Token has expired'];
+        } catch (SignatureInvalidException $e) {
+            return ['error' => 'Invalid token signature'];
         } catch (Exception $e) {
-            return false;
+            return ['error' => 'Invalid token'];
         }
     }
 ?>
