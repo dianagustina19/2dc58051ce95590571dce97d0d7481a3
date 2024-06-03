@@ -96,7 +96,7 @@ The database has a single table `emails`:
     - **Using `curl` from the command line**:
         ```sh
         curl --location --request POST "http://localhost/2dc58051ce95590571dce97d0d7481a3/api.php" \
-        --header "Authorization: Bearer <your_jwt_token>" \
+        --header "bearer: Bearer <your_jwt_token>" \
         --header "Content-Type: application/json" \
         --data-raw '{
             "receipt": "example@example.com",
